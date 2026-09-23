@@ -466,11 +466,25 @@ function ReservaPage() {
                 )}
               </div>
             )}
+
+            <div className="md:col-span-2 md:flex md:justify-end">
+              <Button
+                size="lg"
+                className="hidden h-14 w-full text-base font-semibold md:flex md:w-72"
+                disabled={criar.isPending}
+                onClick={confirmar}
+              >
+                {criar.isPending && (
+                  <Loader2 className="mr-2 size-5 animate-spin" />
+                )}
+                {criar.isPending ? "Confirmando..." : "Confirmar reserva"}
+              </Button>
+            </div>
           </div>
         </section>
       </main>
 
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-card/95 p-4 backdrop-blur">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-card/95 p-4 backdrop-blur md:hidden">
         <div className="mx-auto max-w-xl">
           <Button
             size="lg"
