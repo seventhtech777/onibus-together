@@ -188,32 +188,37 @@ function PagamentoPage() {
             <Copy className="mr-2 size-4" /> Copiar chave PIX
           </Button>
         </section>
+        </div>
 
-        <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
-          <h2 className="text-xl font-semibold">Prefere cartão?</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Você será direcionado ao Mercado Pago com o valor da sua vaga.
-          </p>
-          <Button asChild className="mt-4 h-14 w-full text-base font-semibold">
-            <a
-              href={linkCartao(data.onibus, data.tipo_poltrona)}
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="grid gap-5 lg:col-span-2 lg:grid-cols-2">
+          <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
+            <h2 className="text-xl font-semibold">Prefere cartão?</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Você será direcionado ao Mercado Pago com o valor da sua vaga.
+            </p>
+            <Button asChild className="mt-4 h-14 w-full text-base font-semibold">
+              <a
+                href={linkCartao(data.onibus, data.tipo_poltrona)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <CreditCard className="mr-2 size-5" /> Pagar com Cartão
+              </a>
+            </Button>
+          </section>
+
+          <div className="flex items-stretch">
+            <Button
+              asChild
+              size="lg"
+              className="h-14 min-h-14 w-full self-center bg-success text-base font-semibold text-success-foreground hover:bg-success/90"
             >
-              <CreditCard className="mr-2 size-5" /> Pagar com Cartão
-            </a>
-          </Button>
-        </section>
-
-        <Button
-          asChild
-          size="lg"
-          className="h-14 w-full bg-success text-base font-semibold text-success-foreground hover:bg-success/90"
-        >
-          <a href={whatsUrl} target="_blank" rel="noopener noreferrer">
-            <MessageCircle className="mr-2 size-5" /> Enviar Comprovante
-          </a>
-        </Button>
+              <a href={whatsUrl} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="mr-2 size-5" /> Enviar Comprovante
+              </a>
+            </Button>
+          </div>
+        </div>
       </main>
     </div>
   );
