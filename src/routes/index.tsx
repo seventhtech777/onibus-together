@@ -362,9 +362,9 @@ function ReservaPage() {
               </Select>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 md:col-span-2">
               <Label>Ônibus</Label>
-              <div className="grid gap-2 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-2">
                 <Button
                   type="button"
                   variant={onibus === "Floriano" ? "default" : "outline"}
@@ -393,9 +393,9 @@ function ReservaPage() {
             </div>
 
             {onibus === "Floriano" && (
-              <div className="space-y-2">
+              <div className="space-y-2 md:col-span-2">
                 <Label>Tipo de poltrona</Label>
-                <div className="grid gap-2 sm:grid-cols-2">
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-2">
                   <Button
                     type="button"
                     variant={tipoPoltrona === "Leito" ? "default" : "outline"}
@@ -418,21 +418,21 @@ function ReservaPage() {
               </div>
             )}
 
-            <div className="space-y-2">
-              <Label>Preferência de poltrona</Label>
-              <div className="grid grid-cols-2 gap-2">
-                {(["Janela", "Corredor"] as const).map((p) => (
-                  <Button
-                    key={p}
-                    type="button"
-                    variant={preferencia === p ? "default" : "outline"}
-                    className="h-12"
-                    onClick={() => setPreferencia(p)}
-                  >
-                    {p}
-                  </Button>
-                ))}
-              </div>
+              <div className="space-y-2 md:col-span-2">
+                <Label>Preferência de poltrona</Label>
+                <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+                  {(["Janela", "Corredor"] as const).map((p) => (
+                    <Button
+                      key={p}
+                      type="button"
+                      variant={preferencia === p ? "default" : "outline"}
+                      className="h-12"
+                      onClick={() => setPreferencia(p)}
+                    >
+                      {p}
+                    </Button>
+                  ))}
+                </div>
               <p className="text-xs text-muted-foreground">
                 É apenas uma preferência — as poltronas serão distribuídas
                 posteriormente.
