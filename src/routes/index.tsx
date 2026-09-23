@@ -151,7 +151,7 @@ function ReservaPage() {
     mutationFn: async () => {
       const { data, error } = await supabase.rpc("criar_reserva", {
         p_onibus: onibus,
-        p_tipo_poltrona: onibus === "Floriano" ? tipoPoltrona : null,
+        p_tipo_poltrona: onibus === "Floriano" ? tipoPoltrona : "",
         p_preferencia_poltrona: preferencia,
         p_nome: nome,
         p_cpf: cpf,
