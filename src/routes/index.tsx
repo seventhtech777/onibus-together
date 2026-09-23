@@ -16,13 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import {
-  CAPACIDADE,
-  FORMAS_PAGAMENTO,
-  IGREJAS,
-  brl,
-  mascaraCelular,
-} from "@/lib/reserva";
+import { CAPACIDADE, FORMAS_PAGAMENTO, IGREJAS, brl, mascaraCelular } from "@/lib/reserva";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,8 +30,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Reserva de Vaga — Excursão" },
       {
         property: "og:description",
-        content:
-          "Garanta sua vaga nos ônibus Floriano e Guadalupe. Reserva rápida pelo celular.",
+        content: "Garanta sua vaga nos ônibus Floriano e Guadalupe. Reserva rápida pelo celular.",
       },
     ],
   }),
@@ -57,9 +50,7 @@ function useVagas() {
       const { data, error } = await supabase.rpc("vagas_disponiveis");
       if (error) throw error;
       const row = (Array.isArray(data) ? data[0] : data) as Vagas | undefined;
-      return (
-        row ?? { floriano_leito: 0, floriano_comum: 0, guadalupe: 0 }
-      );
+      return row ?? { floriano_leito: 0, floriano_comum: 0, guadalupe: 0 };
     },
   });
 }
@@ -107,9 +98,7 @@ function Linha({
     <div className="flex items-start gap-3 py-2">
       <span className="mt-0.5 shrink-0 text-primary">{icone}</span>
       <div className="min-w-0">
-        <p className="text-xs uppercase tracking-wide text-muted-foreground">
-          {rotulo}
-        </p>
+        <p className="text-xs uppercase tracking-wide text-muted-foreground">{rotulo}</p>
         <p className="font-medium">{valor}</p>
       </div>
     </div>
@@ -144,8 +133,7 @@ function ReservaPage() {
         : tipoPoltrona === "Comum"
           ? 350
           : 0;
-  const valorPagar =
-    pagamento === "PIX - Parcelado 2x" ? valorTotal / 2 : valorTotal;
+  const valorPagar = pagamento === "PIX - Parcelado 2x" ? valorTotal / 2 : valorTotal;
 
   const criar = useMutation({
     mutationFn: async () => {
@@ -205,109 +193,98 @@ function ReservaPage() {
   return (
     <div className="surface-sand min-h-screen pb-28 md:pb-10">
       <nav className="sticky top-0 z-20 border-b bg-card/95 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-3">
-          <BusFront className="size-5 shrink-0 text-primary" />
-          <span className="truncate text-sm font-semibold tracking-tight md:text-base">
+        <div className="justify-center mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-3">
+          <BusFront className="size-10 *:shrink-0 text-primary" />
+          <span className="truncate text-sm font-semibold tracking-tight md:text-2xl">
             Contratação de Ônibus — Together
           </span>
         </div>
       </nav>
       <header className="px-5 pt-8 pb-6 text-center md:pt-12">
         <h1 className="text-3xl font-semibold md:text-4xl">Reserva de Vaga</h1>
-        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground md:max-w-2xl md:text-base">
-          Confira o roteiro, veja as vagas disponíveis e garanta a sua em poucos
-          toques.
-        </p>
       </header>
 
       <main className="mx-auto w-full max-w-6xl space-y-5 px-4 md:px-6">
         {/* Roteiros */}
         <div className="grid gap-5 md:grid-cols-2">
-
-        <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-            <div className="flex min-w-0 items-center gap-2">
-              <BusFront className="size-5 shrink-0 text-primary" />
-              <h2 className="truncate text-xl font-semibold">Ônibus Floriano</h2>
+          <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+              <div className="flex min-w-0 items-center gap-2">
+                <BusFront className="size-5 shrink-0 text-primary" />
+                <h2 className="truncate text-xl font-semibold">Ônibus Floriano</h2>
+              </div>
+              <span className="shrink-0 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                Leito / Comum
+              </span>
             </div>
-            <span className="shrink-0 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-              Leito / Comum
-            </span>
-          </div>
-          <div className="mt-2 divide-y">
-            <Linha
-              icone={<CalendarDays className="size-4" />}
-              rotulo="Saída"
-              valor="16/11 às 19h — Segunda-feira"
-            />
-            <Linha
-              icone={<MapPin className="size-4" />}
-              rotulo="Passeio"
-              valor="17/11 — Terça-feira"
-            />
-            <Linha
-              icone={<Clock className="size-4" />}
-              rotulo="Retorno"
-              valor="22/11 às 10h — Domingo"
-            />
-          </div>
-          <p className="mt-3 rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
-            Leito {brl(420)} · Comum {brl(350)}
-          </p>
-          <div className="mt-4 space-y-3">
-            <VagaBarra
-              rotulo="Floriano — Leito"
-              restantes={leito}
-              total={CAPACIDADE.florianoLeito}
-            />
-            <VagaBarra
-              rotulo="Floriano — Comum"
-              restantes={comum}
-              total={CAPACIDADE.florianoComum}
-            />
-          </div>
-        </section>
-
-        <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-            <div className="flex min-w-0 items-center gap-2">
-              <BusFront className="size-5 shrink-0 text-primary" />
-              <h2 className="truncate text-xl font-semibold">
-                Ônibus Guadalupe
-              </h2>
+            <div className="mt-2 divide-y">
+              <Linha
+                icone={<CalendarDays className="size-4" />}
+                rotulo="Saída"
+                valor="16/11 às 19h — Segunda-feira"
+              />
+              <Linha
+                icone={<MapPin className="size-4" />}
+                rotulo="Passeio"
+                valor="17/11 — Terça-feira"
+              />
+              <Linha
+                icone={<Clock className="size-4" />}
+                rotulo="Retorno"
+                valor="22/11 às 10h — Domingo"
+              />
             </div>
-            <span className="shrink-0 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-              Vaga única
-            </span>
-          </div>
-          <div className="mt-2 divide-y">
-            <Linha
-              icone={<CalendarDays className="size-4" />}
-              rotulo="Saída"
-              valor="17/11 às 10h — Terça-feira"
-            />
-            <Linha
-              icone={<MapPin className="size-4" />}
-              rotulo="Passeio"
-              valor="22/11 — Domingo"
-            />
-            <Linha
-              icone={<Clock className="size-4" />}
-              rotulo="Retorno"
-              valor="22/11 às 14h — Domingo"
-            />
-          </div>
-          <p className="mt-3 rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
-            Valor único {brl(193)}
-          </p>
-          <div className="mt-4">
-            <VagaBarra
-              rotulo="Guadalupe"
-              restantes={glp}
-              total={CAPACIDADE.guadalupe}
-            />
-          </div>
-        </section>
+            <p className="mt-3 rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
+              Leito {brl(420)} · Comum {brl(350)}
+            </p>
+            <div className="mt-4 space-y-3">
+              <VagaBarra
+                rotulo="Floriano — Leito"
+                restantes={leito}
+                total={CAPACIDADE.florianoLeito}
+              />
+              <VagaBarra
+                rotulo="Floriano — Comum"
+                restantes={comum}
+                total={CAPACIDADE.florianoComum}
+              />
+            </div>
+          </section>
+
+          <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+              <div className="flex min-w-0 items-center gap-2">
+                <BusFront className="size-5 shrink-0 text-primary" />
+                <h2 className="truncate text-xl font-semibold">Ônibus Guadalupe</h2>
+              </div>
+              <span className="shrink-0 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                Vaga única
+              </span>
+            </div>
+            <div className="mt-2 divide-y">
+              <Linha
+                icone={<CalendarDays className="size-4" />}
+                rotulo="Saída"
+                valor="17/11 às 10h — Terça-feira"
+              />
+              <Linha
+                icone={<MapPin className="size-4" />}
+                rotulo="Passeio"
+                valor="22/11 — Domingo"
+              />
+              <Linha
+                icone={<Clock className="size-4" />}
+                rotulo="Retorno"
+                valor="22/11 às 14h — Domingo"
+              />
+            </div>
+            <p className="mt-3 rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
+              Valor único {brl(193)}
+            </p>
+            <div className="mt-4">
+              <VagaBarra rotulo="Guadalupe" restantes={glp} total={CAPACIDADE.guadalupe} />
+            </div>
+          </section>
         </div>
 
         {/* Formulário */}
@@ -434,8 +411,7 @@ function ReservaPage() {
                 ))}
               </div>
               <p className="text-xs text-muted-foreground">
-                É apenas uma preferência — as poltronas serão distribuídas
-                posteriormente.
+                É apenas uma preferência — as poltronas serão distribuídas posteriormente.
               </p>
             </div>
 
@@ -474,9 +450,7 @@ function ReservaPage() {
                 disabled={criar.isPending}
                 onClick={confirmar}
               >
-                {criar.isPending && (
-                  <Loader2 className="mr-2 size-5 animate-spin" />
-                )}
+                {criar.isPending && <Loader2 className="mr-2 size-5 animate-spin" />}
                 {criar.isPending ? "Confirmando..." : "Confirmar reserva"}
               </Button>
             </div>
@@ -492,9 +466,7 @@ function ReservaPage() {
             disabled={criar.isPending}
             onClick={confirmar}
           >
-            {criar.isPending && (
-              <Loader2 className="mr-2 size-5 animate-spin" />
-            )}
+            {criar.isPending && <Loader2 className="mr-2 size-5 animate-spin" />}
             {criar.isPending ? "Confirmando..." : "Confirmar reserva"}
           </Button>
         </div>
