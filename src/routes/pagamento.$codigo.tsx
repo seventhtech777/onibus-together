@@ -153,7 +153,7 @@ function PagamentoPage() {
                 Escaneie o QR Code abaixo no app do seu banco.
               </p>
               <img
-                src="pix.png"
+                src="/pix.png"
                 alt="QR Code PIX para pagamento"
                 className="mx-auto mt-4 w-full max-w-[220px] rounded-xl border bg-background p-2"
               />
