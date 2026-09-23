@@ -418,21 +418,21 @@ function ReservaPage() {
               </div>
             )}
 
-              <div className="space-y-2 md:col-span-2">
-                <Label>Preferência de poltrona</Label>
-                <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-                  {(["Janela", "Corredor"] as const).map((p) => (
-                    <Button
-                      key={p}
-                      type="button"
-                      variant={preferencia === p ? "default" : "outline"}
-                      className="h-12"
-                      onClick={() => setPreferencia(p)}
-                    >
-                      {p}
-                    </Button>
-                  ))}
-                </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label>Preferência de poltrona</Label>
+              <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+                {(["Janela", "Corredor"] as const).map((p) => (
+                  <Button
+                    key={p}
+                    type="button"
+                    variant={preferencia === p ? "default" : "outline"}
+                    className="h-12"
+                    onClick={() => setPreferencia(p)}
+                  >
+                    {p}
+                  </Button>
+                ))}
+              </div>
               <p className="text-xs text-muted-foreground">
                 É apenas uma preferência — as poltronas serão distribuídas
                 posteriormente.
