@@ -161,7 +161,7 @@ function PagamentoPage() {
           <img
             src={qrPix.url}
             alt="QR Code PIX para pagamento"
-            className="mx-auto mt-4 w-full max-w-[280px] rounded-xl border bg-background p-2"
+            className="mx-auto mt-4 w-full max-w-[280px] rounded-xl border bg-background p-2 lg:max-w-[320px]"
           />
           <div className="mt-4 space-y-1 text-sm">
             <p>
