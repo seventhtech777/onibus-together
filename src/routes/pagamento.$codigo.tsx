@@ -150,7 +150,9 @@ function PagamentoPage() {
             )}
           </div>
         </section>
+        </div>
 
+        <div className="space-y-5">
         <section className="rounded-2xl border bg-card p-5 text-center shadow-[var(--shadow-soft)]">
           <h2 className="text-xl font-semibold">Pague com PIX</h2>
           <p className="mt-1 text-sm text-muted-foreground">
