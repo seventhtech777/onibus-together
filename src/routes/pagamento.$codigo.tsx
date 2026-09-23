@@ -111,7 +111,8 @@ function PagamentoPage() {
         </p>
       </header>
 
-      <main className="mx-auto w-full max-w-xl space-y-5 px-4">
+      <main className="mx-auto w-full max-w-6xl space-y-5 px-4 pb-10 md:px-6 lg:grid lg:grid-cols-2 lg:items-start lg:gap-5 lg:space-y-0">
+        <div className="space-y-5">
         <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
             <h2 className="truncate text-xl font-semibold">Sua reserva</h2>
@@ -149,7 +150,9 @@ function PagamentoPage() {
             )}
           </div>
         </section>
+        </div>
 
+        <div className="space-y-5">
         <section className="rounded-2xl border bg-card p-5 text-center shadow-[var(--shadow-soft)]">
           <h2 className="text-xl font-semibold">Pague com PIX</h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -158,7 +161,7 @@ function PagamentoPage() {
           <img
             src={qrPix.url}
             alt="QR Code PIX para pagamento"
-            className="mx-auto mt-4 w-full max-w-[280px] rounded-xl border bg-background p-2"
+            className="mx-auto mt-4 w-full max-w-[280px] rounded-xl border bg-background p-2 lg:max-w-[320px]"
           />
           <div className="mt-4 space-y-1 text-sm">
             <p>
@@ -185,32 +188,37 @@ function PagamentoPage() {
             <Copy className="mr-2 size-4" /> Copiar chave PIX
           </Button>
         </section>
+        </div>
 
-        <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
-          <h2 className="text-xl font-semibold">Prefere cartão?</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Você será direcionado ao Mercado Pago com o valor da sua vaga.
-          </p>
-          <Button asChild className="mt-4 h-14 w-full text-base font-semibold">
-            <a
-              href={linkCartao(data.onibus, data.tipo_poltrona)}
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="grid gap-5 lg:col-span-2 lg:grid-cols-2">
+          <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
+            <h2 className="text-xl font-semibold">Prefere cartão?</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Você será direcionado ao Mercado Pago com o valor da sua vaga.
+            </p>
+            <Button asChild className="mt-4 h-14 w-full text-base font-semibold">
+              <a
+                href={linkCartao(data.onibus, data.tipo_poltrona)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <CreditCard className="mr-2 size-5" /> Pagar com Cartão
+              </a>
+            </Button>
+          </section>
+
+          <div className="flex items-stretch">
+            <Button
+              asChild
+              size="lg"
+              className="h-14 min-h-14 w-full self-center bg-success text-base font-semibold text-success-foreground hover:bg-success/90"
             >
-              <CreditCard className="mr-2 size-5" /> Pagar com Cartão
-            </a>
-          </Button>
-        </section>
-
-        <Button
-          asChild
-          size="lg"
-          className="h-14 w-full bg-success text-base font-semibold text-success-foreground hover:bg-success/90"
-        >
-          <a href={whatsUrl} target="_blank" rel="noopener noreferrer">
-            <MessageCircle className="mr-2 size-5" /> Enviar Comprovante
-          </a>
-        </Button>
+              <a href={whatsUrl} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="mr-2 size-5" /> Enviar Comprovante
+              </a>
+            </Button>
+          </div>
+        </div>
       </main>
     </div>
   );

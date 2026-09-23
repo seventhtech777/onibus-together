@@ -203,25 +203,27 @@ function ReservaPage() {
   }
 
   return (
-    <div className="surface-sand min-h-screen pb-28">
+    <div className="surface-sand min-h-screen pb-28 md:pb-10">
       <nav className="sticky top-0 z-20 border-b bg-card/95 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-xl items-center gap-2 px-4 py-3">
+        <div className="mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-3">
           <BusFront className="size-5 shrink-0 text-primary" />
-          <span className="truncate text-sm font-semibold tracking-tight">
+          <span className="truncate text-sm font-semibold tracking-tight md:text-base">
             Contratação de Ônibus — Together
           </span>
         </div>
       </nav>
-      <header className="px-5 pt-8 pb-6 text-center">
-        <h1 className="text-3xl font-semibold">Reserva de Vaga</h1>
-        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+      <header className="px-5 pt-8 pb-6 text-center md:pt-12">
+        <h1 className="text-3xl font-semibold md:text-4xl">Reserva de Vaga</h1>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground md:max-w-2xl md:text-base">
           Confira o roteiro, veja as vagas disponíveis e garanta a sua em poucos
           toques.
         </p>
       </header>
 
-      <main className="mx-auto w-full max-w-xl space-y-5 px-4">
+      <main className="mx-auto w-full max-w-6xl space-y-5 px-4 md:px-6">
         {/* Roteiros */}
+        <div className="grid gap-5 md:grid-cols-2">
+
         <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
             <div className="flex min-w-0 items-center gap-2">
@@ -306,11 +308,12 @@ function ReservaPage() {
             />
           </div>
         </section>
+        </div>
 
         {/* Formulário */}
-        <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
+        <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)] md:p-7">
           <h2 className="text-xl font-semibold">Seus dados</h2>
-          <div className="mt-4 space-y-4">
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="nome">Nome completo</Label>
               <Input
@@ -359,9 +362,9 @@ function ReservaPage() {
               </Select>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 md:col-span-2">
               <Label>Ônibus</Label>
-              <div className="grid gap-2 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-2">
                 <Button
                   type="button"
                   variant={onibus === "Floriano" ? "default" : "outline"}
@@ -390,9 +393,9 @@ function ReservaPage() {
             </div>
 
             {onibus === "Floriano" && (
-              <div className="space-y-2">
+              <div className="space-y-2 md:col-span-2">
                 <Label>Tipo de poltrona</Label>
-                <div className="grid gap-2 sm:grid-cols-2">
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-2">
                   <Button
                     type="button"
                     variant={tipoPoltrona === "Leito" ? "default" : "outline"}
@@ -415,9 +418,9 @@ function ReservaPage() {
               </div>
             )}
 
-            <div className="space-y-2">
+            <div className="space-y-2 md:col-span-2">
               <Label>Preferência de poltrona</Label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
                 {(["Janela", "Corredor"] as const).map((p) => (
                   <Button
                     key={p}
@@ -463,11 +466,25 @@ function ReservaPage() {
                 )}
               </div>
             )}
+
+            <div className="md:col-span-2 md:flex md:justify-end">
+              <Button
+                size="lg"
+                className="hidden h-14 w-full text-base font-semibold md:flex md:w-72"
+                disabled={criar.isPending}
+                onClick={confirmar}
+              >
+                {criar.isPending && (
+                  <Loader2 className="mr-2 size-5 animate-spin" />
+                )}
+                {criar.isPending ? "Confirmando..." : "Confirmar reserva"}
+              </Button>
+            </div>
           </div>
         </section>
       </main>
 
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-card/95 p-4 backdrop-blur">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-card/95 p-4 backdrop-blur md:hidden">
         <div className="mx-auto max-w-xl">
           <Button
             size="lg"
