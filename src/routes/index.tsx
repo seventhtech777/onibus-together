@@ -204,11 +204,16 @@ function ReservaPage() {
 
   return (
     <div className="surface-sand min-h-screen pb-28">
-      <header className="px-5 pt-10 pb-6 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-          Excursão 2026
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">Reserva de Vaga</h1>
+      <nav className="sticky top-0 z-20 border-b bg-card/95 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-xl items-center gap-2 px-4 py-3">
+          <BusFront className="size-5 shrink-0 text-primary" />
+          <span className="truncate text-sm font-semibold tracking-tight">
+            Contratação de Ônibus — Together
+          </span>
+        </div>
+      </nav>
+      <header className="px-5 pt-8 pb-6 text-center">
+        <h1 className="text-3xl font-semibold">Reserva de Vaga</h1>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
           Confira o roteiro, veja as vagas disponíveis e garanta a sua em poucos
           toques.
