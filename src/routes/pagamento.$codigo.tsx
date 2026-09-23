@@ -201,7 +201,6 @@ function PagamentoPage() {
           </div>
         </div>
 
-        {/* Enviar comprovante — centralizado abaixo das duas colunas */}
         <div className="mt-5 flex justify-center">
           <Button
             asChild
