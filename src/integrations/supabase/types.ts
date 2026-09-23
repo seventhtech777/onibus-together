@@ -14,13 +14,100 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      reservas: {
+        Row: {
+          celular: string
+          codigo_reserva: string
+          cpf: string
+          created_at: string
+          forma_pagamento: string
+          id: string
+          igreja: string
+          nome: string
+          onibus: string
+          preferencia_poltrona: string
+          status_pagamento: string
+          tipo_poltrona: string | null
+          updated_at: string
+          valor_pagamento: number
+          valor_total: number
+        }
+        Insert: {
+          celular: string
+          codigo_reserva: string
+          cpf: string
+          created_at?: string
+          forma_pagamento: string
+          id?: string
+          igreja: string
+          nome: string
+          onibus: string
+          preferencia_poltrona: string
+          status_pagamento?: string
+          tipo_poltrona?: string | null
+          updated_at?: string
+          valor_pagamento: number
+          valor_total: number
+        }
+        Update: {
+          celular?: string
+          codigo_reserva?: string
+          cpf?: string
+          created_at?: string
+          forma_pagamento?: string
+          id?: string
+          igreja?: string
+          nome?: string
+          onibus?: string
+          preferencia_poltrona?: string
+          status_pagamento?: string
+          tipo_poltrona?: string | null
+          updated_at?: string
+          valor_pagamento?: number
+          valor_total?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      criar_reserva: {
+        Args: {
+          p_celular: string
+          p_cpf: string
+          p_forma_pagamento: string
+          p_igreja: string
+          p_nome: string
+          p_onibus: string
+          p_preferencia_poltrona: string
+          p_tipo_poltrona: string
+        }
+        Returns: string
+      }
+      reserva_por_codigo: {
+        Args: { p_codigo: string }
+        Returns: {
+          codigo_reserva: string
+          forma_pagamento: string
+          nome: string
+          onibus: string
+          preferencia_poltrona: string
+          status_pagamento: string
+          tipo_poltrona: string
+          valor_pagamento: number
+          valor_total: number
+        }[]
+      }
+      vagas_disponiveis: {
+        Args: never
+        Returns: {
+          floriano_comum: number
+          floriano_leito: number
+          guadalupe: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
