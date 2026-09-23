@@ -125,16 +125,6 @@ function ReservaPage() {
   const florianoEsgotado = leito <= 0 && comum <= 0;
   const guadalupeEsgotado = glp <= 0;
 
-  const valorTotal =
-    onibus === "Guadalupe"
-      ? 193
-      : tipoPoltrona === "Leito"
-        ? 420
-        : tipoPoltrona === "Comum"
-          ? 350
-          : 0;
-  const valorPagar = pagamento === "PIX - Parcelado 2x" ? valorTotal / 2 : valorTotal;
-
   const criar = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase.rpc("criar_reserva", {
@@ -395,9 +385,9 @@ function ReservaPage() {
               </div>
             )}
 
-            <div className="space-y-2 md:col-span-2">
+            <div className="space-y-2">
               <Label>Preferência de poltrona</Label>
-              <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+              <div className="grid grid-cols-2 gap-2">
                 {(["Janela", "Corredor"] as const).map((p) => (
                   <Button
                     key={p}
@@ -431,19 +421,7 @@ function ReservaPage() {
               </Select>
             </div>
 
-            {valorTotal > 0 && (
-              <div className="rounded-xl border border-gold/40 bg-gold/10 px-4 py-3">
-                <p className="text-sm text-muted-foreground">Valor da vaga</p>
-                <p className="text-lg font-semibold">{brl(valorTotal)}</p>
-                {pagamento === "PIX - Parcelado 2x" && (
-                  <p className="text-sm text-muted-foreground">
-                    1ª parcela agora: <strong>{brl(valorPagar)}</strong>
-                  </p>
-                )}
-              </div>
-            )}
-
-            <div className="md:col-span-2 md:flex md:justify-end">
+            <div className="md:col-span-2 md:flex md:justify-center">
               <Button
                 size="lg"
                 className="hidden h-14 w-full text-base font-semibold md:flex md:w-72"

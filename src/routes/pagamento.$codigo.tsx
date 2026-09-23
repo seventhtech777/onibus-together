@@ -1,12 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { CreditCard, Copy, MessageCircle, ArrowLeft, BusFront } from "lucide-react";
+import { CreditCard, Copy, MessageCircle, BusFront } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { brl, linkCartao, WHATSAPP } from "@/lib/reserva";
-import qrPix from "@/assets/pix.png.asset.json";
 
 export const Route = createFileRoute("/pagamento/$codigo")({
   head: () => ({
@@ -108,8 +107,9 @@ function PagamentoPage() {
         </p>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl space-y-5 px-4 pb-10 md:px-6 lg:grid lg:grid-cols-2 lg:items-start lg:gap-5 lg:space-y-0">
-        <div className="space-y-5">
+      <main className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-6">
+        <div className="grid gap-5 lg:grid-cols-2 lg:items-stretch">
+          {/* Sua reserva — card dominante em largura */}
           <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
               <h2 className="truncate text-xl font-semibold">Sua reserva</h2>
@@ -144,73 +144,74 @@ function PagamentoPage() {
               )}
             </div>
           </section>
-        </div>
 
-        <div className="space-y-5">
-          <section className="rounded-2xl border bg-card p-5 text-center shadow-[var(--shadow-soft)]">
-            <h2 className="text-xl font-semibold">Pague com PIX</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Escaneie o QR Code abaixo no app do seu banco.
-            </p>
-            <img
-              src={qrPix.url}
-              alt="QR Code PIX para pagamento"
-              className="mx-auto mt-4 w-full max-w-[280px] rounded-xl border bg-background p-2 lg:max-w-[320px]"
-            />
-            <div className="mt-4 space-y-1 text-sm">
-              <p>
-                <span className="text-muted-foreground">Nome:</span>{" "}
-                <strong>Verlan Pereira da Costa</strong>
+          {/* Div com mesma altura da reserva: PIX + cartão empilhados, dividindo o espaço */}
+          <div className="flex flex-col gap-5">
+            <section className="flex flex-1 flex-col justify-center rounded-2xl border bg-card p-5 text-center shadow-[var(--shadow-soft)]">
+              <h2 className="text-xl font-semibold">Pague com PIX</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Escaneie o QR Code abaixo no app do seu banco.
               </p>
-              <p>
-                <span className="text-muted-foreground">Chave PIX:</span>{" "}
-                <strong>{CHAVE_PIX}</strong>
-              </p>
-              <p>
-                <span className="text-muted-foreground">Banco:</span> <strong>Mercado Pago</strong>
-              </p>
-            </div>
-            <Button
-              variant="outline"
-              className="mt-4 h-12 w-full"
-              onClick={() => {
-                navigator.clipboard.writeText(CHAVE_PIX);
-                toast.success("Chave PIX copiada!");
-              }}
-            >
-              <Copy className="mr-2 size-4" /> Copiar chave PIX
-            </Button>
-          </section>
-        </div>
-
-        <div className="grid gap-5 lg:col-span-2 lg:grid-cols-2">
-          <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
-            <h2 className="text-xl font-semibold">Prefere cartão?</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Você será direcionado ao Mercado Pago com o valor da sua vaga.
-            </p>
-            <Button asChild className="mt-4 h-14 w-full text-base font-semibold">
-              <a
-                href={linkCartao(data.onibus, data.tipo_poltrona)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <img
+                src="/pix.png"
+                alt="QR Code PIX para pagamento"
+                className="mx-auto mt-4 w-full max-w-[220px] rounded-xl border bg-background p-2"
+              />
+              <div className="mt-4 space-y-1 text-sm">
+                <p>
+                  <span className="text-muted-foreground">Nome:</span>{" "}
+                  <strong>Verlan Pereira da Costa</strong>
+                </p>
+                <p>
+                  <span className="text-muted-foreground">Chave PIX:</span>{" "}
+                  <strong>{CHAVE_PIX}</strong>
+                </p>
+                <p>
+                  <span className="text-muted-foreground">Banco:</span>{" "}
+                  <strong>Mercado Pago</strong>
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                className="mt-4 h-12 w-full"
+                onClick={() => {
+                  navigator.clipboard.writeText(CHAVE_PIX);
+                  toast.success("Chave PIX copiada!");
+                }}
               >
-                <CreditCard className="mr-2 size-5" /> Pagar com Cartão
-              </a>
-            </Button>
-          </section>
+                <Copy className="mr-2 size-4" /> Copiar chave PIX
+              </Button>
+            </section>
 
-          <div className="flex items-stretch">
-            <Button
-              asChild
-              size="lg"
-              className="h-14 min-h-14 w-full self-center bg-success text-base font-semibold text-success-foreground hover:bg-success/90"
-            >
-              <a href={whatsUrl} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="mr-2 size-5" /> Enviar Comprovante
-              </a>
-            </Button>
+            <section className="flex flex-1 flex-col justify-center rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
+              <h2 className="text-xl font-semibold">Prefere cartão?</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Você será direcionado ao Mercado Pago com o valor da sua vaga.
+              </p>
+              <Button asChild className="mt-4 h-14 w-full text-base font-semibold">
+                <a
+                  href={linkCartao(data.onibus, data.tipo_poltrona)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <CreditCard className="mr-2 size-5" /> Pagar com Cartão
+                </a>
+              </Button>
+            </section>
           </div>
+        </div>
+
+        {/* Enviar comprovante — centralizado abaixo das duas colunas */}
+        <div className="mt-5 flex justify-center">
+          <Button
+            asChild
+            size="lg"
+            className="h-14 min-h-14 w-full max-w-md text-base font-semibold bg-success text-success-foreground hover:bg-success/90"
+          >
+            <a href={whatsUrl} target="_blank" rel="noopener noreferrer">
+              <MessageCircle className="mr-2 size-5" /> Enviar Comprovante
+            </a>
+          </Button>
         </div>
       </main>
     </div>
