@@ -111,7 +111,8 @@ function PagamentoPage() {
         </p>
       </header>
 
-      <main className="mx-auto w-full max-w-xl space-y-5 px-4">
+      <main className="mx-auto w-full max-w-6xl space-y-5 px-4 pb-10 md:px-6 lg:grid lg:grid-cols-2 lg:items-start lg:gap-5 lg:space-y-0">
+        <div className="space-y-5">
         <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)]">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
             <h2 className="truncate text-xl font-semibold">Sua reserva</h2>
