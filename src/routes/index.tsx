@@ -313,7 +313,7 @@ function ReservaPage() {
         {/* Formulário */}
         <section className="rounded-2xl border bg-card p-5 shadow-[var(--shadow-soft)] md:p-7">
           <h2 className="text-xl font-semibold">Seus dados</h2>
-          <div className="mt-4 space-y-4">
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="nome">Nome completo</Label>
               <Input
