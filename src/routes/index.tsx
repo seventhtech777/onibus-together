@@ -77,7 +77,7 @@ function VagaBarra({
               : "shrink-0 text-muted-foreground"
           }
         >
-          {esgotado ? "Esgotado" : `${disp}/${total} disponíveis`}
+          {esgotado ? "Esgotado" : `${disp} ${disp === 1 ? "disponível" : "disponíveis"}`}
         </span>
       </div>
       <Progress value={(disp / total) * 100} className="h-2" />
@@ -201,7 +201,7 @@ function ReservaPage() {
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
               <div className="flex min-w-0 items-center gap-2">
                 <BusFront className="size-5 shrink-0 text-primary" />
-                <h2 className="truncate text-xl font-semibold">Ônibus Floriano</h2>
+                <h2 className="truncate text-xl font-semibold">Ônibus de Floriano</h2>
               </div>
               <span className="shrink-0 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
                 Leito / Comum
@@ -224,7 +224,7 @@ function ReservaPage() {
                 valor="22/11 às 10h — Domingo"
               />
             </div>
-            <p className="mt-3 rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
+            <p className="mt-3 text-center rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
               Leito {brl(420)} · Comum {brl(350)}
             </p>
             <div className="mt-4 space-y-3">
@@ -245,10 +245,10 @@ function ReservaPage() {
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
               <div className="flex min-w-0 items-center gap-2">
                 <BusFront className="size-5 shrink-0 text-primary" />
-                <h2 className="truncate text-xl font-semibold">Ônibus Guadalupe</h2>
+                <h2 className="truncate text-xl font-semibold">Ônibus de Guadalupe</h2>
               </div>
               <span className="shrink-0 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-                Vaga única
+                Único Tipo
               </span>
             </div>
             <div className="mt-2 divide-y">
@@ -268,7 +268,7 @@ function ReservaPage() {
                 valor="22/11 às 14h — Domingo"
               />
             </div>
-            <p className="mt-3 rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
+            <p className="mt-3 text-center rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
               Valor único {brl(293)}
             </p>
             <div className="mt-4">
