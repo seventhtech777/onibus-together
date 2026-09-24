@@ -34,7 +34,7 @@ type Reserva = {
   forma_pagamento: string;
   valor_total: number;
   valor_pagamento: number;
-  status_pagamento: string;
+  status_pagamento: boolean;
 };
 
 const CHAVE_PIX = "vpcostaiasd@gmail.com";
@@ -126,7 +126,7 @@ function PagamentoPage() {
                   : []),
                 ["Preferência", data.preferencia_poltrona],
                 ["Forma de pagamento", data.forma_pagamento],
-                ["Status", data.status_pagamento],
+                ["Status", data.status_pagamento ? "Pago" : "Pendente"],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-4 py-2">
                   <dt className="text-muted-foreground">{k}</dt>
