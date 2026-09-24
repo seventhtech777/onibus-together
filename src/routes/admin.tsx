@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Session } from "@supabase/supabase-js";
 import { toast } from "sonner";
-import { BusFront, LogOut } from "lucide-react";
+import { BusFront, LogOut, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -123,6 +123,7 @@ function Login() {
 function Painel({ userId }: { userId: string }) {
   const qc = useQueryClient();
   const [confirmando, setConfirmando] = useState<string | null>(null);
+  const [busca, setBusca] = useState("");
 
   const isAdmin = useQuery({
     queryKey: ["is-admin", userId],
@@ -151,6 +152,25 @@ function Painel({ userId }: { userId: string }) {
     },
   });
 
+  const lista = reservas.data ?? [];
+
+  // Ordenada por nome, usada como base para a tabela e para o filtro de busca
+  const listaOrdenada = useMemo(
+    () => [...lista].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")),
+    [lista],
+  );
+
+  const listaFiltrada = useMemo(() => {
+    const termo = busca.trim().toLowerCase();
+    if (!termo) return listaOrdenada;
+    return listaOrdenada.filter(
+      (r) =>
+        r.nome.toLowerCase().includes(termo) ||
+        r.igreja?.toLowerCase().includes(termo) ||
+        r.codigo_reserva?.toLowerCase().includes(termo),
+    );
+  }, [listaOrdenada, busca]);
+
   if (isAdmin.isLoading) return null;
   if (!isAdmin.data)
     return (
@@ -159,7 +179,6 @@ function Painel({ userId }: { userId: string }) {
       </p>
     );
 
-  const lista = reservas.data ?? [];
   const leito = lista.filter((r) => r.onibus === "Floriano" && r.tipo_poltrona === "Leito").length;
   const comum = lista.filter((r) => r.onibus === "Floriano" && r.tipo_poltrona === "Comum").length;
   const guadalupe = lista.filter((r) => r.onibus === "Guadalupe").length;
@@ -193,14 +212,17 @@ function Painel({ userId }: { userId: string }) {
   return (
     <main className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:px-6">
       <h1 className="text-2xl font-bold text-foreground md:text-3xl">Painel administrativo</h1>
+
       <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
         {cards.map(([t, v], i) => (
           <div
             key={t}
-            className={`rounded-xl border border-border bg-card p-4 ${i === 4 ? "col-span-2 md:col-span-1" : ""}`}
+            className={`rounded-2xl border border-border/60 bg-primary p-5 transition-colors ${
+              i === 4 ? "col-span-2 md:col-span-1" : ""
+            }`}
           >
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t}</p>
-            <p className="mt-1 text-2xl font-bold text-foreground">{v}</p>
+            <p className="text-[11px] font-medium uppercase tracking-wider text-blue-200">{t}</p>
+            <p className="mt-2 text-2xl font-semibold tracking-tight text-white">{v}</p>
           </div>
         ))}
       </div>
@@ -208,27 +230,46 @@ function Painel({ userId }: { userId: string }) {
         O valor arrecadado soma apenas pagamentos confirmados.
       </p>
 
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-base font-semibold text-foreground">Reservas</h2>
+        <div className="relative w-full sm:w-72">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            placeholder="Buscar por nome, igreja ou código..."
+            className="pl-9"
+          />
+        </div>
+      </div>
+
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
         <table className="w-full text-sm">
           <thead className="bg-muted text-left text-muted-foreground">
             <tr>
-              <th className="px-4 py-3 font-medium">Código</th>
+              <th className="hidden px-4 py-3 font-medium md:table-cell">Código</th>
               <th className="px-4 py-3 font-medium">Nome</th>
-              <th className="px-4 py-3 font-medium">Igreja</th>
-              <th className="px-4 py-3 font-medium">Celular</th>
+              <th className="hidden px-4 py-3 font-medium md:table-cell">Igreja</th>
+              <th className="hidden px-4 py-3 font-medium md:table-cell">Celular</th>
+              <th className="hidden px-4 py-3 font-medium md:table-cell">Valor</th>
               <th className="px-4 py-3 font-medium text-right">Pagamento</th>
             </tr>
           </thead>
           <tbody>
-            {lista.map((r) => (
+            {listaFiltrada.map((r) => (
               <tr key={r.id} className="border-t border-border">
-                <td className="px-4 py-3 font-mono font-semibold">{r.codigo_reserva}</td>
+                <td className="hidden px-4 py-3 font-mono font-semibold md:table-cell">
+                  {r.codigo_reserva}
+                </td>
                 <td className="px-4 py-3">{r.nome}</td>
-                <td className="px-4 py-3">{r.igreja}</td>
-                <td className="px-4 py-3 whitespace-nowrap">{r.celular}</td>
+                <td className="hidden px-4 py-3 md:table-cell">{r.igreja}</td>
+                <td className="hidden px-4 py-3 whitespace-nowrap md:table-cell">{r.celular}</td>
+                <td className="hidden px-4 py-3 whitespace-nowrap md:table-cell">
+                  R$ {r.valor_pagamento}
+                </td>
                 <td className="px-4 py-3 text-right">
                   {r.status_pagamento ? (
-                    <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
+                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
                       Confirmado
                     </span>
                   ) : (
@@ -243,10 +284,10 @@ function Painel({ userId }: { userId: string }) {
                 </td>
               </tr>
             ))}
-            {lista.length === 0 && (
+            {listaFiltrada.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
-                  Nenhuma reserva ainda.
+                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                  {lista.length === 0 ? "Nenhuma reserva ainda." : "Nenhuma reserva encontrada."}
                 </td>
               </tr>
             )}
