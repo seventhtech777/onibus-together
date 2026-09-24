@@ -92,10 +92,10 @@ function PagamentoPage() {
 
   return (
     <div className="surface-sand min-h-screen pb-10">
-      <nav className="sticky top-0 z-20 border-b bg-card/95 backdrop-blur">
+      <nav className="sticky top-0 z-20 border-b bg-primary backdrop-blur">
         <div className="justify-center mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-3">
-          <BusFront className="size-10 *:shrink-0 text-primary" />
-          <span className="truncate text-sm font-semibold tracking-tight md:text-2xl">
+          <BusFront className="size-10 *:shrink-0 text-white" />
+          <span className="truncate text-sm text-white font-semibold tracking-tight md:text-2xl">
             Contratação de Ônibus — Together
           </span>
         </div>
