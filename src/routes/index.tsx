@@ -269,7 +269,7 @@ function ReservaPage() {
               />
             </div>
             <p className="mt-3 rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground">
-              Valor único {brl(193)}
+              Valor único {brl(293)}
             </p>
             <div className="mt-4">
               <VagaBarra rotulo="Guadalupe" restantes={glp} total={CAPACIDADE.guadalupe} />
