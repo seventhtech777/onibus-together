@@ -131,7 +131,10 @@ function Painel({ userId }: { userId: string }) {
     setConfirmando(id);
     const { error } = await supabase.from("reservas").update({ status_pagamento: true }).eq("id", id);
     setConfirmando(null);
-    if (error) return toast.error("Não foi possível confirmar");
+    if (error) {
+      toast.error("Não foi possível confirmar");
+      return;
+    }
     toast.success("Pagamento confirmado");
     qc.invalidateQueries({ queryKey: ["admin-reservas"] });
   }
